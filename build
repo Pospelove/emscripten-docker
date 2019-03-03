@@ -34,6 +34,75 @@ DOCKER_REPO_VARIANTS = [
     DOCKER_REPO_UBUNTU,
 ]
 
+# Variables:
+# version: Either SemVer, or branch name. I.e: 1.22.33, incoming...
+# tag: Emscripten-like tag schema: sdk-tag-1.22.33-64bit, sdk-incoming-64bit
+# namespace: name of docker user / project
+DOCKER_VARIANTS = [
+    {
+        "path": "trzeci/emscripten-slim",
+        "tags": [
+            "{namespace}/emscripten:{version}-slim",
+            "{namespace}/emscripten-slim:{tag}",    # compatibility, with an old structure
+        ],
+        "tests": [
+            "emcc test.cpp -o test.js -s WASM=0 && node test.js",
+            "emcc test.cpp -o test.js -s WASM=1 && node test.js",
+            "nodejs --version",
+            "node --version",
+            "python --version",
+            "/emsdk_portable/sdk/embuilder.py build zlib", # tests if https is available
+        ],
+    },
+    {
+        "path" :"trzeci/emscripten",
+        "tags":  [
+            "{namespace}/emscripten:{version}",
+            "{namespace}/emscripten:{tag}",         # compatibility
+        ],
+        "tests": [
+            "emcc test.cpp -o test.js -s WASM=0 && node test.js",
+            "emcc test.cpp -o test.js -s WASM=0 --closure 1 && node test.js",
+            "emcc test.cpp -o test.js -s WASM=1 && node test.js",
+            "nodejs --version",
+            "node --version",
+            "python --version",
+            "wget --version",
+            "curl --version",
+            "zip --version",
+            "unzip -version",
+            "make --version",
+            "cmake --version",
+            "git --version",
+            "which ssh",
+            "perl --version",
+        ],
+    },
+    {
+        "path" : "trzeci/emscriptem-ubuntu",
+        "tags": [
+            "{namespace}/emscripten:{version}-ubuntu",
+        ],
+        "tests": [
+            "emcc test.cpp -o test.js -s WASM=0 && node test.js",
+            "emcc test.cpp -o test.js -s WASM=0 --closure 1 && node test.js",
+            "emcc test.cpp -o test.js -s WASM=1 && node test.js",
+            "nodejs --version",
+            "node --version",
+            "python --version",
+            "wget --version",
+            "curl --version",
+            "zip --version",
+            "unzip -version",
+            "make --version",
+            "cmake --version",
+            "git --version",
+            "which ssh",
+            "perl --version",
+        ],
+    },
+]
+
 SDK_MIN = "1.37.16"
 QUEUE_FILE = "queue.txt"
 LOG_COMPILATION = "build.log"
@@ -169,6 +238,7 @@ sort_variants_lut = {
     "emscripten" : 1,
     "emscripten-ubuntu" : 2,
 }
+
 def sort_variants(x, y):
     return sort_variants_lut[x.project] - sort_variants_lut[y.project]
 

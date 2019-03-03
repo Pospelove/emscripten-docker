@@ -33,13 +33,23 @@ Each tag was build from [Dockerfile](https://github.com/trzecieu/emscripten-dock
 ### latest
 The default version (aka `latest`) points at [the latest tagged release](https://github.com/kripken/emscripten/releases) by Emscripten. 
 
-### Version release
+
+### Variants
+* `{VERSION}-slim`: size optimized version of Emscripten, based on Debian
+* `{VERSION}`: Standard release - based on `{VERSION}-slim` with extra packages installed
+* `{VERSION}-ubuntu`: Debian based version of `{VERSION}` - with the same set of packages installed
+
+Where `{VERSION}` is either SemVer release of Emscripten, or one of branch: `incoming`, `master`.
+For example `1.38.25` is resolved to tags: `1.38.25`, `1.38.25-slim`, `1.38.25-ubuntu` 
+
+
+### OLD: Version release
 `sdk-tag-{VERSION}-{BITS}`
 * **VERSION**: One of the official [Emscripten tag](https://github.com/kripken/emscripten/tags) released since 1.34.1
 * **BITS**: `["32bit", "64bit"]`
 Example: `sdk-tag-1.34.4-64bit`
 
-### Branch release
+### OLD: Branch release
 `sdk-{BRANCH}-{BITS}`
 * **BRANCH**: `["incoming", "master"]`
 * **BITS**: `["32bit", "64bit"]`
