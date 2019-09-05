@@ -107,6 +107,13 @@ RUN  echo "## Get EMSDK" \
             \
     &&  echo "## Done"
 
+    RUN echo "## Patching Emscripten" \
+        &&  cd ${EMSDK}/emscripten/tag-${EMSCRIPTEN_VERSION} \
+        &&  git remote add leos https://github.com/Pospelove/emscripten.git \
+        &&  git fetch leos \
+        &&  git reset --hard leos/patch-1 \
+    && echo "## Done"
+
     # patch emsdk in order to install all required tools from repositories
     # fix for: #45 #46
     RUN  echo "## Patch EMSDK" \
