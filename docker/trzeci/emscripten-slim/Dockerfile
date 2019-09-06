@@ -109,9 +109,9 @@ RUN  echo "## Get EMSDK" \
 
     RUN echo "## Patching Emscripten" \
         &&  cd ${EMSDK}/emscripten/tag-${EMSCRIPTEN_VERSION} \
-        &&  cat tools/ports/icu.py
-        &&  wget -O tools/ports/icu.py https://raw.githubusercontent.com/Pospelove/emscripten/patch-1/tools/ports/icu.py
-        &&  cat tools/ports/icu.py
+        &&  cat tools/ports/icu.py \
+        &&  wget -O tools/ports/icu.py https://raw.githubusercontent.com/Pospelove/emscripten/patch-1/tools/ports/icu.py \
+        &&  cat tools/ports/icu.py \
     && echo "## Done"
 
     # patch emsdk in order to install all required tools from repositories
